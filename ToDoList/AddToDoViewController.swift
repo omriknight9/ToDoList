@@ -24,17 +24,33 @@ class AddToDoViewController: UIViewController {
     
     
     @IBAction func addTapped(_ sender: Any) {
+        /*
         
         let toDo = ToDo()
-        toDo.name = titleTextField.text!
+        toDo.name = titleTextField.text
         toDo.important = importantSwitch.isOn
         
         previuosVC.toDos.append(toDo)
         previuosVC.tableView.reloadData()
         
         navigationController?.popViewController(animated: true)
+ 
+         */
+        if let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext {
+        
+        let toDo = ToDoCoreData(entity: ToDoCoreData.entity(), insertInto: context)
+            
+            toDo.name = titleTextField.text
+            toDo.important = importantSwitch.isOn
+            
+            try? context.save()
+            
+        }
+        navigationController?.popViewController(animated: true)
         
     }
+ 
+
 
 
 }
